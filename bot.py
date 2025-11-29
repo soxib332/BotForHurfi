@@ -21,6 +21,19 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(b"Bot is running!")
 
+    def do_HEAD(self):
+        self.send_response(200)
+        self.end_headers()
+
+    def do_POST(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running!")
+
+    def do_OPTIONS(self):
+        self.send_response(200)
+        self.end_headers()
+
 def run_server():
     server = HTTPServer(("0.0.0.0", PORT), Handler)
     server.serve_forever()
