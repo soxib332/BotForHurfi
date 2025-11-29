@@ -155,8 +155,13 @@ async def send_daily_report():
     else:
         msg = "📊 **Daily PDF Upload Report**\n\n"
         for user_id, count in data.items():
-            user = await bot.fetch_user(int(user_id))
-            msg += f"• **{user.name}** — `{count} PDFs`\n"
+    member = channel.guild.get_member(int(user_id))
+    if member:
+        display_name = member.display_name
+    else:
+        user = await bot.fetch_user(int(user_id))
+        display_name = user.display_name
+    msg += f"• **{display_name}** — `{count} PDFs`\n"
 
         await channel.send(msg)
 
@@ -198,8 +203,13 @@ async def view(ctx):
     else:
         msg = "**Current Submissions:**\n"
         for user_id, count in data.items():
-            user = await bot.fetch_user(int(user_id))
-            msg += f"• {user.name} — {count} PDFs\n"
+    member = ctx.guild.get_member(int(user_id))
+    if member:
+        display_name = member.display_name
+    else:
+        user = await bot.fetch_user(int(user_id))
+        display_name = user.display_name
+    msg += f"• {display_name} — {count} PDFs\n"
         await ctx.send(msg)
 
 @bot.command()
