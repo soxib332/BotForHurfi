@@ -10,6 +10,21 @@ TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 CHANNEL_ID = int(os.environ.get("DISCORD_CHANNEL_ID", "0"))
 SUBMIT_ROLE = "PDF Uploader"
 
+# Start a tiny HTTP server in the background
+PORT = int(os.environ.get("PORT", 10000))  # Render sets $PORT automatically
+
+class Handler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.end_headers()
+        self.wfile.write(b"Bot is running!")
+
+def run_server():
+    server = HTTPServer(("0.0.0.0", PORT), Handler)
+    server.serve_forever()
+
+threading.Thread(target=run_server, daemon=True).start()
+
 intents = discord.Intents.default()
 intents.message_content = True
 intents.members = True
