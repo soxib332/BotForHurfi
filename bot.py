@@ -5,6 +5,8 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 import pytz
 import json
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 
 TOKEN = os.environ.get("DISCORD_BOT_TOKEN")
 CHANNEL_ID = int(os.environ.get("DISCORD_CHANNEL_ID", "0"))
